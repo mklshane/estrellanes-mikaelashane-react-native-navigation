@@ -1,14 +1,13 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { View, Text } from "react-native";
+import React from "react";
+import { Props } from "../../navigation/props";
 
-export class CartScreen extends Component {
-  render() {
-    return (
-      <View>
-        <Text>CartScreen</Text>
-      </View>
-    )
-  }
-}
+const CartScreen: React.FC<Props> = ({ navigation }) => {
+  return (
+    <View>
+      <Text>CartScreen</Text>
+    </View>
+  );
+};
 
-export default CartScreen
+export default CartScreen;

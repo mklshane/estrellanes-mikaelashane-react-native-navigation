@@ -17,8 +17,8 @@ export type ThemeColors = {
 
 export const themeColors: Record<ThemeMode, ThemeColors> = {
   light: {
-    background: "#F7F9FB",
-    surface: "#FFFFFF",
+    background: "#FFFFFF",
+    surface: "#F4F4F4",
     card: "#FFFFFF",
     text: "#0F172A",
     mutedText: "#475569",
@@ -31,9 +31,9 @@ export const themeColors: Record<ThemeMode, ThemeColors> = {
     error: "#EF4444",
   },
   dark: {
-    background: "#0F172A",
-    surface: "#1E293B",
-    card: "#1E293B",
+    background: "#181818",
+    surface: "#212121",
+    card: "#2f2f2f",
     text: "#E2E8F0",
     mutedText: "#94A3B8",
     primary: "#38BDF8",

@@ -1,14 +1,13 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { View, Text } from "react-native";
+import React from "react";
+import { Props } from "../../navigation/props";
 
-export class CheckoutScreen extends Component {
-  render() {
-    return (
-      <View>
-        <Text>CheckoutScreen</Text>
-      </View>
-    )
-  }
-}
+const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
+  return (
+    <View>
+      <Text>CheckoutScreen</Text>
+    </View>
+  );
+};
 
-export default CheckoutScreen
+export default CheckoutScreen;
