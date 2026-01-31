@@ -49,7 +49,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
         <CartButton
           count={totalItems}
-          onPress={() => navigation.navigate("Cart")}
+          onPress={() => navigation.navigate("Shopping Cart")}
         />
       </View>
       <FlatList
