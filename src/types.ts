@@ -8,3 +8,12 @@ export interface Product {
 	averageRating?: number;
 	reviewCount?: number;
 }
+
+export type CartItem = {
+	product: Product;
+	quantity: number;
+};
+
+export type CartState = {
+	items: Record<string, CartItem>;
+};

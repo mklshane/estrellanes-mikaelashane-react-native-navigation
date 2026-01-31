@@ -1,15 +1,6 @@
 import React, { createContext, useContext, useMemo, useReducer, ReactNode, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Product } from "../types";
-
-type CartItem = {
-	product: Product;
-	quantity: number;
-};
-
-type CartState = {
-	items: Record<string, CartItem>;
-};
+import { Product, CartItem, CartState } from "../types";
 
 type CartAction =
 	| { type: "ADD"; product: Product; quantity: number }
