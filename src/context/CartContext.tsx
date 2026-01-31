@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useMemo, useReducer, ReactNode } from "react";
+import React, { createContext, useContext, useMemo, useReducer, ReactNode, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Product } from "../types";
 
 type CartItem = {
@@ -14,7 +15,8 @@ type CartAction =
 	| { type: "ADD"; product: Product; quantity: number }
 	| { type: "REMOVE"; productId: string }
 	| { type: "SET_QUANTITY"; productId: string; quantity: number }
-	| { type: "CLEAR" };
+	| { type: "CLEAR" }
+	| { type: "HYDRATE"; state: CartState };
 
 const initialState: CartState = { items: {} };
 
@@ -52,6 +54,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 		}
 		case "CLEAR":
 			return initialState;
+		case "HYDRATE":
+			return action.state;
 		default:
 			return state;
 	}
@@ -87,6 +91,24 @@ const CartContext = createContext<CartContextValue>({
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
 	const [state, dispatch] = useReducer(cartReducer, initialState);
+	const [hydrated, setHydrated] = useState(false);
+
+	useEffect(() => {
+		const load = async () => {
+			try {
+				const raw = await AsyncStorage.getItem("cart-items");
+				if (raw) {
+					const parsed = JSON.parse(raw) as CartState;
+					if (parsed && parsed.items) {
+						dispatch({ type: "HYDRATE", state: parsed });
+					}
+				}
+			} finally {
+				setHydrated(true);
+			}
+		};
+		load();
+	}, []);
 
 	const items = useMemo(() => Object.values(state.items), [state.items]);
 
@@ -99,6 +121,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 		() => items.reduce((sum, item) => sum + item.product.price * item.quantity, 0),
 		[items]
 	);
+
+	useEffect(() => {
+		if (!hydrated) return;
+		AsyncStorage.setItem("cart-items", JSON.stringify(state)).catch(() => {});
+	}, [state, hydrated]);
 
 	const addToCart = (product: Product, quantity = 1) => {
 		dispatch({ type: "ADD", product, quantity });

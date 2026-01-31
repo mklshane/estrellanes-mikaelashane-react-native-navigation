@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Product } from "../types";
 import { useTheme } from "../context/ThemeContext";
 import { resolveImageSource } from "../data/imageMap";
+import AddToCartModal from "./AddToCartModal";
 
 type Props = {
   product: Product;
   onPress?: (product: Product) => void;
-  onAddToCart?: (product: Product) => void;
+  onAddToCart?: (product: Product, quantity?: number) => void;
 };
 
 const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
   const { colors, isDarkMode } = useTheme();
   const firstImage = product.images?.[0];
   const imageSource = resolveImageSource(firstImage);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleConfirm = (p: Product, qty: number) => {
+    onAddToCart?.(p, qty);
+  };
 
   return (
     <Pressable
@@ -50,7 +56,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
         </View>
 
         <Pressable
-          onPress={() => onAddToCart?.(product)}
+          onPress={() => setShowModal(true)}
           style={[
             styles.circleBtn,
             {
@@ -70,6 +76,13 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           </Text>
         </Pressable>
       </View>
+
+      <AddToCartModal
+        visible={showModal}
+        product={product}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirm}
+      />
     </Pressable>
   );
 };

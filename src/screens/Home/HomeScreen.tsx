@@ -29,7 +29,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         onPress={() => {
           // navigation.navigate("ProductDetail", { id: item.id });
         }}
-        onAddToCart={() => addToCart(item, 1)}
+        onAddToCart={(product, quantity = 1) => addToCart(product, quantity)}
       />
     </View>
   );
