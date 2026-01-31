@@ -49,8 +49,7 @@ export const AppNavigator = () => {
                 height: 40,
                 alignItems: "center",
                 justifyContent: "center",
-              
-                            }}
+              }}
             >
               <Ionicons
                 name={isDarkMode ? "sunny-outline" : "moon-outline"}

@@ -6,9 +6,12 @@ import ProductCard from "../../components/ProductCard";
 import { Product } from "../../types";
 import { useTheme } from "../../context/ThemeContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useCart } from "../../context/CartContext";
+import CartButton from "../../components/CartButton";
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { colors } = useTheme();
+  const { addToCart, totalItems } = useCart();
   const [query, setQuery] = useState("");
 
   const filteredProducts = useMemo(() => {
@@ -26,9 +29,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         onPress={() => {
           // navigation.navigate("ProductDetail", { id: item.id });
         }}
-        onAddToCart={() => {
-          // cart logic
-        }}
+        onAddToCart={() => addToCart(item, 1)}
       />
     </View>
   );
@@ -38,14 +39,19 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       edges={["left", "right", "bottom"]}
       style={{ backgroundColor: colors.background, flex: 1 }}
     >
-      <View style={styles.headerWrapper}>
-      <Text style={[styles.title, { color: colors.text }]}>Discover</Text>
-      <Text style={[styles.subtitle, { color: colors.mutedText }]}>
-        Curated picks for your daily essentials
-      </Text>
+      <View style={styles.headerRow}>
+        <View >
+          <Text style={[styles.title, { color: colors.text }]}>Discover</Text>
+          <Text style={[styles.subtitle, { color: colors.mutedText }]}>
+            Curated picks for your daily essentials
+          </Text>
+        </View>
 
-     
-    </View>
+        <CartButton
+          count={totalItems}
+          onPress={() => navigation.navigate("Cart")}
+        />
+      </View>
       <FlatList
         data={filteredProducts}
         keyExtractor={(item) => item.id}
@@ -61,11 +67,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  headerWrapper: {
+  headerRow: {
     paddingTop: 16,
     paddingHorizontal: 16,
     paddingBottom: 12,
     gap: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 28,
