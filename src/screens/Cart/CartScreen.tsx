@@ -1,11 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import {
-  Image,
   Pressable,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +12,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import { resolveImageSource } from "../../data/imageMap";
 import { formatCurrency } from "../../utils/formatters";
+import CartItem from "../../components/CartItem";
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
   const { colors, isDarkMode } = useTheme();
@@ -51,60 +50,24 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const renderItem = (itemId: string, name: string, subtitle: string, price: number, qty: number, image?: any) => {
-    const isSelected = isItemSelected(itemId);
+  const renderItem = useCallback(({ item }: any) => {
+    const isSelected = isItemSelected(item.product.id);
+    const image = resolveImageSource(item.product.images?.[0]);
+
     return (
-    <View key={itemId} style={[styles.itemRow, { borderColor: colors.border, backgroundColor: isSelected ? (isDarkMode ? "#1a1a1a" : "#f5f5f5") : colors.card }]}> 
-      <Pressable onPress={() => toggleSelectItem(itemId)} hitSlop={10} style={styles.checkboxContainer}>
-        <View style={[styles.checkbox, { borderColor: colors.border, backgroundColor: isSelected ? "#0F172A" : "transparent" }]}>
-          {isSelected && <Text style={{ color: "#fff", fontSize: 14, fontWeight: "700" }}>✓</Text>}
-        </View>
-      </Pressable>
-
-      <View style={styles.itemLeft}>
-        {image ? (
-          <Image source={image} style={styles.itemImage} resizeMode="cover" />
-        ) : (
-          <View style={[styles.imagePlaceholder, { backgroundColor: colors.surface }]}>
-            <Text style={{ color: colors.mutedText }}>No image</Text>
-          </View>
-        )}
-        <View style={styles.itemInfo}>
-          <Text style={[styles.itemName, { color: colors.text }]} numberOfLines={1}>
-            {name}
-          </Text>
-          <Text style={[styles.itemSubtitle, { color: colors.mutedText }]} numberOfLines={1}>
-            {subtitle}
-          </Text>
-          <Text style={[styles.itemPrice, { color: colors.text }]}>{formatCurrency(price)}</Text>
-        </View>
-      </View>
-
-      <View style={styles.itemRight}>
-        <Pressable onPress={() => removeFromCart(itemId)} hitSlop={10}>
-          <Text style={{ color: colors.mutedText, fontSize: 18 }}>×</Text>
-        </Pressable>
-        <View style={[styles.qtyControl, { borderColor: colors.border }]}> 
-          <Pressable
-            style={styles.qtyBtn}
-            hitSlop={8}
-            onPress={() => decrement(itemId)}
-          >
-            <Text style={[styles.qtyText, { color: colors.text }]}>−</Text>
-          </Pressable>
-          <Text style={[styles.qtyValue, { color: colors.text }]}>{qty}</Text>
-          <Pressable
-            style={styles.qtyBtn}
-            hitSlop={8}
-            onPress={() => increment(itemId)}
-          >
-            <Text style={[styles.qtyText, { color: colors.text }]}>+</Text>
-          </Pressable>
-        </View>
-      </View>
-    </View>
+      <CartItem
+        item={item}
+        isSelected={isSelected}
+        colors={colors}
+        isDarkMode={isDarkMode}
+        onToggleSelect={toggleSelectItem}
+        onRemove={removeFromCart}
+        onIncrement={increment}
+        onDecrement={decrement}
+        image={image}
+      />
     );
-  };
+  }, [colors, isDarkMode, isItemSelected, toggleSelectItem, removeFromCart, decrement, increment]);
 
   return (
     <SafeAreaView
@@ -112,47 +75,78 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
       style={{ flex: 1, backgroundColor: colors.background }}
     >
       <View style={{ flex: 1 }}>
-        <ScrollView
-          contentContainerStyle={{ paddingBottom: 24 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            {items.length === 0 ? (
-              <View style={styles.emptyState}>
-                <Text style={[styles.emptyText, { color: colors.mutedText }]}>
-                  Your cart is empty.
-                </Text>
-              </View>
-            ) : (
-              <>
-                <View style={[styles.selectAllRow, { borderColor: colors.border }]}>
-                  <Pressable onPress={handleSelectAll} style={styles.selectAllControl} hitSlop={10}>
-                    <View style={[styles.checkbox, { borderColor: colors.border, backgroundColor: isAllSelected ? "#0F172A" : "transparent" }]}>
-                      {isAllSelected && <Text style={{ color: "#fff", fontSize: 14, fontWeight: "700" }}>✓</Text>}
-                    </View>
-                    <Text style={[styles.selectAllText, { color: colors.text }]}>
-                      Select All {items.length > 0 && `(${items.length})`}
-                    </Text>
-                  </Pressable>
-                </View>
-                <View style={styles.listBlock}>
-                  {items.map(({ product, quantity }) =>
-                    renderItem(
-                      product.id,
-                      product.name,
-                      product.description,
-                      product.price,
-                      quantity,
-                      resolveImageSource(product.images?.[0])
-                    )
-                  )}
-                </View>
-              </>
-            )}
+        {items.length === 0 ? (
+          <View
+            style={[
+              styles.emptyContainer,
+              { backgroundColor: colors.background },
+            ]}
+          >
+            <View style={styles.emptyIconWrapper}>
+              <Text style={styles.emptyIcon}>🛒</Text>
+            </View>
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>
+              Your Cart is Empty
+            </Text>
+            <Text style={[styles.emptySubtitle, { color: colors.mutedText }]}>
+              Add items from our store to get started
+            </Text>
           </View>
-        </ScrollView>
+        ) : (
+          <FlatList
+            data={items}
+            keyExtractor={(item) => item.product.id}
+            renderItem={renderItem}
+            contentContainerStyle={styles.flatListContent}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={
+              <View
+                style={[
+                  styles.selectAllRow,
+                  { borderColor: colors.border, backgroundColor: colors.card },
+                ]}
+              >
+                <Pressable
+                  onPress={handleSelectAll}
+                  style={styles.selectAllControl}
+                  hitSlop={10}
+                >
+                  <View
+                    style={[
+                      styles.checkbox,
+                      {
+                        borderColor: colors.border,
+                        backgroundColor: isAllSelected
+                          ? "#0F172A"
+                          : "transparent",
+                      },
+                    ]}
+                  >
+                    {isAllSelected && (
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontSize: 14,
+                          fontWeight: "700",
+                        }}
+                      >
+                        ✓
+                      </Text>
+                    )}
+                  </View>
+                  <Text style={[styles.selectAllText, { color: colors.text }]}>
+                    Select All {items.length > 0 && `(${items.length})`}
+                  </Text>
+                </Pressable>
+              </View>
+            }
+            ItemSeparatorComponent={() => <View style={styles.itemGap} />}
+          />
+        )}
+      </View>
 
-        {items.length > 0 && (
+      {items.length > 0 && (
         <View
           style={[
             styles.bottomBar,
@@ -167,11 +161,17 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={[styles.totalLabel, { color: colors.text }]}>
                 Selected ({selectedCount})
               </Text>
-              <Text style={[styles.subNote, { color: colors.mutedText }]}>Order and get reward points</Text>
+              <Text style={[styles.subNote, { color: colors.mutedText }]}>
+                {deliveryNote}
+              </Text>
             </View>
             <View style={{ alignItems: "flex-end" }}>
-              <Text style={[styles.totalValue, { color: colors.text }]}>{formattedSelectedTotal}</Text>
-              <Text style={[styles.subNote, { color: colors.mutedText }]}>{deliveryNote}</Text>
+              <Text style={[styles.totalValue, { color: colors.text }]}>
+                {formattedSelectedTotal}
+              </Text>
+              <Text style={[styles.subNote, { color: colors.mutedText }]}>
+                Reward points +10
+              </Text>
             </View>
           </View>
 
@@ -179,50 +179,67 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
             style={[
               styles.checkoutBtn,
               {
-                backgroundColor: selectedCount === 0 ? colors.mutedText : (isDarkMode ? colors.text : "#0F172A"),
+                backgroundColor:
+                  selectedCount === 0 ? colors.mutedText : "#81D14F",
                 opacity: selectedCount === 0 ? 0.5 : 1,
               },
             ]}
             onPress={() => selectedCount > 0 && navigation.navigate("Checkout")}
             disabled={selectedCount === 0}
           >
-            <Text style={[styles.checkoutText, { color: isDarkMode ? colors.background : "#FFFFFF" }]}>
+            <Text
+              style={[
+                styles.checkoutText,
+                { color: isDarkMode ? colors.background : "#000000" },
+              ]}
+            >
               Proceed to Checkout ({selectedCount})
             </Text>
           </Pressable>
         </View>
-        )}
-      </View>
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
     paddingHorizontal: 16,
-    paddingTop: 12,
-    gap: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "700",
-    letterSpacing: -0.2,
-  },
-  listBlock: {
-    borderRadius: 12,
-    borderWidth: 1,
-    overflow: "hidden",
-  },
-  itemRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    gap: 12,
+    paddingVertical: 16,
     borderBottomWidth: 1,
   },
-  checkboxContainer: {
-    marginRight: 8,
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "800",
+    letterSpacing: -0.5,
+  },
+  itemCount: {
+    fontSize: 12,
+    fontWeight: "600",
+    marginTop: 4,
+  },
+  flatListContent: {
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 24,
+  },
+  itemGap: {
+    height: 10,
+  },
+  selectAllRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 12,
+    marginBottom: 4,
+    gap: 10,
+  },
+  selectAllControl: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    flex: 1,
   },
   checkbox: {
     width: 24,
@@ -232,113 +249,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  selectAllRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    gap: 12,
-  },
-  selectAllControl: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
   selectAllText: {
     fontSize: 15,
     fontWeight: "700",
   },
-  itemLeft: {
+  emptyContainer: {
     flex: 1,
-    flexDirection: "row",
-    gap: 12,
-    alignItems: "center",
-  },
-  itemImage: {
-    width: 76,
-    height: 76,
-    borderRadius: 12,
-  },
-  imagePlaceholder: {
-    width: 76,
-    height: 76,
-    borderRadius: 12,
+    paddingHorizontal: 16,
     alignItems: "center",
     justifyContent: "center",
+    gap: 24,
   },
-  itemInfo: {
-    flex: 1,
-    gap: 2,
-  },
-  itemName: {
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  itemSubtitle: {
-    fontSize: 13,
-    fontWeight: "500",
-  },
-  itemPrice: {
-    fontSize: 15,
-    fontWeight: "700",
-  },
-  itemRight: {
-    alignItems: "flex-end",
-    gap: 8,
-  },
-  qtyControl: {
-    flexDirection: "row",
+  emptyIconWrapper: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 16,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    gap: 12,
+    justifyContent: "center",
+    backgroundColor: "rgba(15, 23, 42, 0.05)",
   },
-  qtyBtn: {
-    padding: 6,
+  emptyIcon: {
+    fontSize: 56,
   },
-  qtyText: {
-    fontSize: 20,
-    fontWeight: "700",
-  },
-  qtyValue: {
-    fontSize: 16,
-    fontWeight: "600",
-    minWidth: 20,
+  emptyTitle: {
+    fontSize: 22,
+    fontWeight: "800",
+    letterSpacing: -0.3,
     textAlign: "center",
   },
-  coupon: {
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 12,
-  },
-  couponRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  couponInput: {
-    flex: 1,
+  emptySubtitle: {
     fontSize: 14,
-    fontWeight: "600",
-    paddingVertical: 10,
-  },
-  couponBtn: {
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  couponBtnText: {
-    fontSize: 14,
-    fontWeight: "700",
-  },
-  totalCard: {
-    borderRadius: 16,
-    borderWidth: 1,
-    padding: 16,
-    gap: 14,
+    fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 20,
   },
   bottomBar: {
     borderTopWidth: 1,
@@ -372,17 +315,6 @@ const styles = StyleSheet.create({
   checkoutText: {
     fontSize: 16,
     fontWeight: "700",
-  },
-  emptyState: {
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 24,
-    alignItems: "center",
-    borderStyle: "dashed",
-  },
-  emptyText: {
-    fontSize: 14,
-    fontWeight: "600",
   },
 });
 

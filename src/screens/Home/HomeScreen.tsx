@@ -27,7 +27,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <ProductCard
         product={item}
         onPress={() => {
-          // navigation.navigate("ProductDetail", { id: item.id });
+          navigation.navigate("ProductDetails", { id: item.id });
         }}
         onAddToCart={(product, quantity = 1) => addToCart(product, quantity)}
       />
