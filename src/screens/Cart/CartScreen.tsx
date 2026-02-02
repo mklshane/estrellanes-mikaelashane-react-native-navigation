@@ -13,6 +13,7 @@ import { Props } from "../../navigation/props";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import { resolveImageSource } from "../../data/imageMap";
+import { formatCurrency } from "../../utils/formatters";
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
   const { colors, isDarkMode } = useTheme();
@@ -27,7 +28,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
   const deliveryNote = "Free shipping";
 
   const formattedTotal = useMemo(
-    () => `₱${totalPrice.toFixed(2)}`,
+    () => formatCurrency(totalPrice),
     [totalPrice]
   );
 
@@ -48,7 +49,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={[styles.itemSubtitle, { color: colors.mutedText }]} numberOfLines={1}>
             {subtitle}
           </Text>
-          <Text style={[styles.itemPrice, { color: colors.text }]}>{`₱${price.toFixed(2)}`}</Text>
+          <Text style={[styles.itemPrice, { color: colors.text }]}>{formatCurrency(price)}</Text>
         </View>
       </View>
 

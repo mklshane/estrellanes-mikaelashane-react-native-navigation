@@ -4,6 +4,7 @@ import { Product } from "../types";
 import { useTheme } from "../context/ThemeContext";
 import { resolveImageSource } from "../data/imageMap";
 import AddToCartModal from "./AddToCartModal";
+import { formatCurrency } from "../utils/formatters";
 
 type Props = {
   product: Product;
@@ -51,7 +52,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
             {product.name}
           </Text>
           <Text style={[styles.price, { color: colors.text }]}>
-            ₱{product.price.toFixed(2)}
+            {formatCurrency(product.price)}
           </Text>
         </View>
 

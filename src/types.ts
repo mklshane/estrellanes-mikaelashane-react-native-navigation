@@ -12,8 +12,10 @@ export interface Product {
 export type CartItem = {
 	product: Product;
 	quantity: number;
+	isSelected?: boolean;
 };
 
 export type CartState = {
 	items: Record<string, CartItem>;
+	selectedItems: Set<string>;
 };
