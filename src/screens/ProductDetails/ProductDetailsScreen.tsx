@@ -178,11 +178,6 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
 
         {/* Product Info */}
         <View style={styles.infoSection}>
-          <View style={styles.nameRow}>
-            <Text style={[styles.brand, { color: colors.mutedText }]}>
-              BRAND
-            </Text>
-          </View>
 
           <Text style={[styles.productName, { color: colors.text }]}>
             {product.name}
@@ -392,14 +387,6 @@ const styles = StyleSheet.create({
   infoSection: {
     paddingHorizontal: 16,
     gap: 12,
-  },
-  nameRow: {
-    gap: 6,
-  },
-  brand: {
-    fontSize: 12,
-    fontWeight: "700",
-    letterSpacing: 0.5,
   },
   productName: {
     fontSize: 22,
