@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: "#10B981",
+    backgroundColor: "#81D14F",
     alignItems: "center",
     justifyContent: "center",
   },
   icon: {
     fontSize: 40,
-    color: "#FFFFFF",
+    color: "#000000",
     fontWeight: "700",
   },
   title: {
