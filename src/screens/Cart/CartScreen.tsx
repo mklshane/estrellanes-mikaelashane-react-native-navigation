@@ -22,18 +22,45 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
     increment,
     decrement,
     removeFromCart,
-    totalPrice,
+    toggleSelectItem,
+    selectAllItems,
+    deselectAllItems,
+    isItemSelected,
+    selectedCount,
+    selectedTotalPrice,
+    totalItems,
   } = useCart();
 
   const deliveryNote = "Free shipping";
 
-  const formattedTotal = useMemo(
-    () => formatCurrency(totalPrice),
-    [totalPrice]
+  const formattedSelectedTotal = useMemo(
+    () => formatCurrency(selectedTotalPrice),
+    [selectedTotalPrice]
   );
 
-  const renderItem = (itemId: string, name: string, subtitle: string, price: number, qty: number, image?: any) => (
-    <View key={itemId} style={[styles.itemRow, { borderColor: colors.border }]}> 
+  const isAllSelected = useMemo(
+    () => items.length > 0 && items.every((item) => isItemSelected(item.product.id)),
+    [items, isItemSelected]
+  );
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      deselectAllItems();
+    } else {
+      selectAllItems();
+    }
+  };
+
+  const renderItem = (itemId: string, name: string, subtitle: string, price: number, qty: number, image?: any) => {
+    const isSelected = isItemSelected(itemId);
+    return (
+    <View key={itemId} style={[styles.itemRow, { borderColor: colors.border, backgroundColor: isSelected ? (isDarkMode ? "#1a1a1a" : "#f5f5f5") : colors.card }]}> 
+      <Pressable onPress={() => toggleSelectItem(itemId)} hitSlop={10} style={styles.checkboxContainer}>
+        <View style={[styles.checkbox, { borderColor: colors.border, backgroundColor: isSelected ? "#0F172A" : "transparent" }]}>
+          {isSelected && <Text style={{ color: "#fff", fontSize: 14, fontWeight: "700" }}>✓</Text>}
+        </View>
+      </Pressable>
+
       <View style={styles.itemLeft}>
         {image ? (
           <Image source={image} style={styles.itemImage} resizeMode="cover" />
@@ -76,7 +103,8 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       </View>
     </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView
@@ -89,7 +117,6 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={[styles.container, { backgroundColor: colors.background }]}> 
-
             {items.length === 0 ? (
               <View style={styles.emptyState}>
                 <Text style={[styles.emptyText, { color: colors.mutedText }]}>
@@ -97,24 +124,35 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
                 </Text>
               </View>
             ) : (
-              <View style={styles.listBlock}>
-                {items.map(({ product, quantity }) =>
-                  renderItem(
-                    product.id,
-                    product.name,
-                    product.description,
-                    product.price,
-                    quantity,
-                    resolveImageSource(product.images?.[0])
-                  )
-                )}
-              </View>
+              <>
+                <View style={[styles.selectAllRow, { borderColor: colors.border }]}>
+                  <Pressable onPress={handleSelectAll} style={styles.selectAllControl} hitSlop={10}>
+                    <View style={[styles.checkbox, { borderColor: colors.border, backgroundColor: isAllSelected ? "#0F172A" : "transparent" }]}>
+                      {isAllSelected && <Text style={{ color: "#fff", fontSize: 14, fontWeight: "700" }}>✓</Text>}
+                    </View>
+                    <Text style={[styles.selectAllText, { color: colors.text }]}>
+                      Select All {items.length > 0 && `(${items.length})`}
+                    </Text>
+                  </Pressable>
+                </View>
+                <View style={styles.listBlock}>
+                  {items.map(({ product, quantity }) =>
+                    renderItem(
+                      product.id,
+                      product.name,
+                      product.description,
+                      product.price,
+                      quantity,
+                      resolveImageSource(product.images?.[0])
+                    )
+                  )}
+                </View>
+              </>
             )}
-
-          
           </View>
         </ScrollView>
 
+        {items.length > 0 && (
         <View
           style={[
             styles.bottomBar,
@@ -126,22 +164,34 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         >
           <View style={styles.totalRow}>
             <View>
-              <Text style={[styles.totalLabel, { color: colors.text }]}>Total</Text>
+              <Text style={[styles.totalLabel, { color: colors.text }]}>
+                Selected ({selectedCount})
+              </Text>
               <Text style={[styles.subNote, { color: colors.mutedText }]}>Order and get reward points</Text>
             </View>
             <View style={{ alignItems: "flex-end" }}>
-              <Text style={[styles.totalValue, { color: colors.text }]}>{formattedTotal}</Text>
+              <Text style={[styles.totalValue, { color: colors.text }]}>{formattedSelectedTotal}</Text>
               <Text style={[styles.subNote, { color: colors.mutedText }]}>{deliveryNote}</Text>
             </View>
           </View>
 
           <Pressable
-            style={[styles.checkoutBtn, { backgroundColor: isDarkMode ? colors.text : "#0F172A" }]}
-            onPress={() => navigation.navigate("Checkout")}
+            style={[
+              styles.checkoutBtn,
+              {
+                backgroundColor: selectedCount === 0 ? colors.mutedText : (isDarkMode ? colors.text : "#0F172A"),
+                opacity: selectedCount === 0 ? 0.5 : 1,
+              },
+            ]}
+            onPress={() => selectedCount > 0 && navigation.navigate("Checkout")}
+            disabled={selectedCount === 0}
           >
-            <Text style={[styles.checkoutText, { color: isDarkMode ? colors.background : "#FFFFFF" }]}>Proceed to Checkout</Text>
+            <Text style={[styles.checkoutText, { color: isDarkMode ? colors.background : "#FFFFFF" }]}>
+              Proceed to Checkout ({selectedCount})
+            </Text>
           </Pressable>
         </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -168,8 +218,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
-    gap: 16,
+    gap: 12,
     borderBottomWidth: 1,
+  },
+  checkboxContainer: {
+    marginRight: 8,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  selectAllRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    gap: 12,
+  },
+  selectAllControl: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  selectAllText: {
+    fontSize: 15,
+    fontWeight: "700",
   },
   itemLeft: {
     flex: 1,
