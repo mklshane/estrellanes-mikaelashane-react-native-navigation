@@ -38,6 +38,12 @@ const imageMap: Record<string, any> = {
   "../assets/products/p13/p13-1.png": require("../../assets/products/p13/p13-1.png"),
   "../assets/products/p13/p13-2.png": require("../../assets/products/p13/p13-2.png"),
   "../assets/products/p13/p13-3.png": require("../../assets/products/p13/p13-3.png"),
+  "../assets/products/p14/p14-1.png": require("../../assets/products/p14/p14-1.png"),
+  "../assets/products/p14/p14-2.png": require("../../assets/products/p14/p14-2.png"),
+  "../assets/products/p14/p14-3.png": require("../../assets/products/p14/p14-3.png"),
+  "../assets/products/p15/p15-1.png": require("../../assets/products/p15/p15-1.png"),
+  "../assets/products/p15/p15-2.png": require("../../assets/products/p15/p15-2.png"),
+  "../assets/products/p15/p15-3.png": require("../../assets/products/p15/p15-3.png"),
 };
 
 export const resolveImageSource = (source?: string) => {

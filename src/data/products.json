@@ -227,5 +227,43 @@
       "../assets/products/p13/p13-2.png",
       "../assets/products/p13/p13-3.png"
     ]
+  }, {
+    "id": "14",
+    "name": "PUMA Speedcat Ballet Metallic",
+    "price": 4200.00,
+    "description": "An icon of racing culture, the PUMA Speedcat has been synonymous with speed, precision, and unparalleled performance for over 25 years. It originated as a fireproof Formula 1® footwear style, but over the decades it found itself on a new circuit — transcending the tracks of Monaco for the streets of global fashion capitals. ",
+    "type": "shoes",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["US 6", "US 7", "US 8", "US 9", "US 10", "US 11"]
+      }
+    ],
+    "images": [
+      "../assets/products/p14/p14-1.png",
+      "../assets/products/p14/p14-2.png",
+      "../assets/products/p14/p14-3.png"
+    ]
+  },{
+    "id": "15",
+    "name": "ADIDAS Samba Jane Shoess",
+    "price": 5500.00,
+    "description": "Step into the spotlight with the Samba OG Shoes, a true icon in the adidas Originals collection. These shoes are crafted for those who embrace a lifestyle of bold expression and timeless style.",
+    "type": "shoes",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"]
+      },
+      {
+        "name": "Color",
+        "options": ["White", "Black", "Red"]
+      }
+    ],
+    "images": [
+      "../assets/products/p15/p15-1.png",
+      "../assets/products/p15/p15-2.png",
+      "../assets/products/p15/p15-3.png"
+    ]
   }
 ]

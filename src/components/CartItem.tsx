@@ -94,6 +94,19 @@ const CartItem: React.FC<CartItemProps> = ({
           >
             {product.description}
           </Text>
+          {product.variations && product.variations.length > 0 && (
+            <View style={styles.variationsRow}>
+              {product.variations.map((variation, idx) => (
+                <Text
+                  key={idx}
+                  style={[styles.variationText, { color: colors.mutedText }]}
+                  numberOfLines={1}
+                >
+                  {variation.name}: {variation.options[0]}
+                </Text>
+              ))}
+            </View>
+          )}
           <Text style={[styles.itemPrice, { color: colors.text }]}>
             {formatCurrency(product.price)}
           </Text>
@@ -195,6 +208,14 @@ const styles = StyleSheet.create({
   itemPrice: {
     fontSize: 13,
     fontWeight: "700",
+  },
+  variationsRow: {
+    gap: 4,
+    marginTop: 2,
+  },
+  variationText: {
+    fontSize: 10,
+    fontWeight: "500",
   },
   itemActions: {
     alignItems: "flex-end",

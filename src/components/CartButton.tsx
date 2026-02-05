@@ -21,11 +21,9 @@ const CartButton: React.FC<CartButtonProps> = ({ count, onPress }) => {
       style={[styles.button, { backgroundColor }]}
     >
       <Ionicons name="cart-outline" size={22} color={iconColor} />
-      {count > 0 && (
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{count}</Text>
-        </View>
-      )}
+      <View style={styles.badge}>
+        <Text style={styles.badgeText}>{count}</Text>
+      </View>
     </Pressable>
   );
 };
@@ -38,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    
   },
   badge: {
     position: "absolute",
