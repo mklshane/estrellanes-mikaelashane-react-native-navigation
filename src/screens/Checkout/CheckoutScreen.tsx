@@ -111,7 +111,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
             style={[
               styles.checkoutBtn,
               {
-                backgroundColor: '#81D14F',
+                backgroundColor: colors.ctaGreen,
                 opacity: isLoading ? 0.6 : 1,
               },
             ]}

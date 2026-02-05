@@ -178,7 +178,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
               styles.checkoutBtn,
               {
                 backgroundColor:
-                  selectedCount === 0 ? colors.mutedText : "#81D14F",
+                  selectedCount === 0 ? colors.mutedText : colors.ctaGreen,
                 opacity: selectedCount === 0 ? 0.5 : 1,
               },
             ]}

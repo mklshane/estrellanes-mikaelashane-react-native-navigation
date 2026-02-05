@@ -42,7 +42,12 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
             resizeMode="cover"
           />
           {product.type && (
-            <View style={[styles.typeBadge, { backgroundColor: isDarkMode ? "#81D14F" : "#0F172A" }]}>
+            <View
+              style={[
+                styles.typeBadge,
+                { backgroundColor: isDarkMode ? colors.ctaGreen : "#0F172A" },
+              ]}
+            >
               <Text style={[styles.typeBadgeText, { color: isDarkMode ? "#000" : "#FFF" }]}>
                 {product.type}
               </Text>
@@ -72,7 +77,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           style={[
             styles.circleBtn,
             {
-              backgroundColor: isDarkMode ? "#81D14F" : "#0F172A",
+              backgroundColor: colors.ctaGreen,
             },
           ]}
         >

@@ -94,7 +94,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                             styles.optionChip,
                             {
                               borderColor: isSelected ? colors.text : colors.border,
-                              backgroundColor: isSelected ? (isDarkMode ? "#81D14F" : "#0F172A") : colors.surface,
+                              backgroundColor: isSelected ? colors.ctaGreen : colors.surface,
                             },
                           ]}
                         >
@@ -171,7 +171,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                       (variation) => selectedVariations[variation.name]
                     )
                       ? colors.mutedText
-                      : "#81D14F",
+                      : colors.ctaGreen,
                   opacity:
                     product?.variations &&
                     product.variations.length > 0 &&

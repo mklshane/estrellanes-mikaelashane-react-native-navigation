@@ -34,7 +34,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
     >
       <View style={styles.overlay}>
         <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <View style={styles.iconWrapper}>
+          <View style={[styles.iconWrapper, { backgroundColor: colors.ctaGreen }]}>
             <Text style={styles.icon}>✓</Text>
           </View>
           <Text style={[styles.title, { color: colors.text }]}>

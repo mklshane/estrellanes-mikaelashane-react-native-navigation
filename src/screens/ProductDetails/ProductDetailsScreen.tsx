@@ -323,7 +323,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
           style={[
             styles.addToCartBtn,
             {
-              backgroundColor: "#81D14F",
+              backgroundColor: colors.ctaGreen,
             },
           ]}
         >
