@@ -41,7 +41,9 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           resizeMode="cover"
         />
       ) : (
-        <View style={[styles.imagePlaceholder, { backgroundColor: colors.surface }]}> 
+        <View
+          style={[styles.imagePlaceholder, { backgroundColor: colors.surface }]}
+        >
           <Text style={{ color: colors.mutedText }}>No image</Text>
         </View>
       )}
@@ -61,7 +63,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           style={[
             styles.circleBtn,
             {
-              backgroundColor: isDarkMode ? "#ececec" : "#0F172A",
+              backgroundColor: isDarkMode ? "#81D14F" : "#0F172A",
             },
           ]}
         >

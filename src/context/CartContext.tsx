@@ -19,12 +19,15 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 		case "ADD": {
 			const existing = state.items[action.product.id];
 			const nextQty = Math.max(1, (existing?.quantity ?? 0) + action.quantity);
+			const newSelected = new Set(state.selectedItems);
+			newSelected.add(action.product.id);
 			return {
 				...state,
 				items: {
 					...state.items,
 					[action.product.id]: { product: action.product, quantity: nextQty, isSelected: true },
 				},
+				selectedItems: newSelected,
 			};
 		}
 		case "REMOVE": {

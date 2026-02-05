@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Props } from "../../navigation/props";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
+import CartButton from "../../components/CartButton";
 import { resolveImageSource } from "../../data/imageMap";
 import products from "../../data/products.json";
 import { Product } from "../../types";
@@ -24,7 +25,7 @@ const { width } = Dimensions.get("window");
 
 const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
   const { colors, isDarkMode } = useTheme();
-  const { addToCart } = useCart();
+  const { addToCart, totalItems } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
@@ -276,16 +277,6 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
         ]}
       >
         <Pressable
-          hitSlop={8}
-          style={[
-            styles.wishlistBtn,
-            { borderColor: colors.border, backgroundColor: colors.surface },
-          ]}
-        >
-          <Ionicons name="heart-outline" size={24} color={colors.text} />
-        </Pressable>
-
-        <Pressable
           onPress={() => setShowModal(true)}
           style={[
             styles.addToCartBtn,
@@ -305,6 +296,11 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
             Add to Cart
           </Text>
         </Pressable>
+
+        <CartButton
+          count={totalItems}
+          onPress={() => navigation.navigate("Shopping Cart")}
+        />
       </View>
 
       <AddToCartModal
@@ -455,14 +451,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     alignItems: "center",
-  },
-  wishlistBtn: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
   },
   addToCartBtn: {
     flex: 1,
