@@ -72,7 +72,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           </Text>
         </View>
 
-        <Pressable
+        {/* <Pressable
           onPress={() => setShowModal(true)}
           style={[
             styles.circleBtn,
@@ -91,7 +91,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           >
             +
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
 
       <AddToCartModal

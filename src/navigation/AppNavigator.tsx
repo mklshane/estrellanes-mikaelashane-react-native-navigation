@@ -41,6 +41,24 @@ export const AppNavigator = () => {
           headerTintColor: colors.text,
           headerTitleStyle: { color: colors.text },
           contentStyle: { backgroundColor: colors.background },
+          headerRight: () => (
+            <Pressable
+              onPress={toggleTheme}
+              hitSlop={12}
+              style={{
+                width: 40,
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Ionicons
+                name={isDarkMode ? "sunny-outline" : "moon-outline"}
+                size={24}
+                color={colors.text}
+              />
+            </Pressable>
+          ),
         }}
       >
         <Stack.Screen
@@ -48,24 +66,6 @@ export const AppNavigator = () => {
           component={HomeScreen}
           options={({ navigation }) => ({
             title: "Discover",
-            headerRight: () => (
-              <Pressable
-                onPress={toggleTheme}
-                hitSlop={12}
-                style={{
-                  width: 40,
-                  height: 40,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons
-                  name={isDarkMode ? "sunny-outline" : "moon-outline"}
-                  size={24}
-                  color={colors.text}
-                />
-              </Pressable>
-            ),
           })}
         />
         <Stack.Screen
