@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Dimensions,
   FlatList,
@@ -28,6 +28,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
   const { addToCart, totalItems } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const carouselRef = useRef<any>(null);
 
   const productId = route?.params?.id;
   const product = products.find(
@@ -68,13 +69,26 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
     });
   }, [navigation, product.name, colors]);
 
-  const renderImageThumbnail = ({ item, index }: { item: string; index: number }) => {
+  const renderImageThumbnail = ({
+    item,
+    index,
+  }: {
+    item: string;
+    index: number;
+  }) => {
     const imageSource = resolveImageSource(item);
     const isActive = index === currentImageIndex;
 
     return (
       <Pressable
-        onPress={() => setCurrentImageIndex(index)}
+        onPress={() => {
+          setCurrentImageIndex(index);
+
+          carouselRef.current?.scrollToOffset({
+            offset: index * width,
+            animated: true,
+          });
+        }}
         style={[
           styles.thumbnail,
           {
@@ -93,6 +107,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
     );
   };
 
+
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
@@ -106,7 +121,24 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
         {/* Image Carousel Container */}
         <View style={{ position: "relative", width: "100%", aspectRatio: 1 }}>
           {/* Main Image Carousel */}
-          <ScrollView
+          <FlatList
+            ref={carouselRef}
+            data={images}
+            renderItem={({ item }) => {
+              const imageSource = resolveImageSource(item);
+              return (
+                <View style={[{ width: width, height: "100%" }]}>
+                  {imageSource ? (
+                    <Image source={imageSource} style={styles.mainImage} />
+                  ) : (
+                    <View style={styles.imagePlaceholder}>
+                      <Text style={{ color: colors.mutedText }}>No image</Text>
+                    </View>
+                  )}
+                </View>
+              );
+            }}
+            keyExtractor={(_, index) => index.toString()}
             horizontal
             pagingEnabled
             scrollEventThrottle={16}
@@ -121,30 +153,21 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
               width: "100%",
               height: "100%",
             }}
-            contentContainerStyle={styles.imageCarouselContent}
-          >
-            {images.map((imageUrl, index) => {
-              const imageSource = resolveImageSource(imageUrl);
-              return (
-                <View key={index} style={[{ width: width }]}>
-                  {imageSource ? (
-                    <Image source={imageSource} style={styles.mainImage} />
-                  ) : (
-                    <View style={styles.imagePlaceholder}>
-                      <Text style={{ color: colors.mutedText }}>No image</Text>
-                    </View>
-                  )}
-                </View>
-              );
-            })}
-          </ScrollView>
+          />
 
           {/* Image Indicators */}
           {images.length > 0 && (
             <View style={styles.indicatorsContainer}>
               {images.map((_, index) => (
-                <View
+                <Pressable
                   key={index}
+                  onPress={() => {
+                    carouselRef.current?.scrollToOffset({
+                      offset: index * width,
+                      animated: true,
+                    });
+                  }}
+                  hitSlop={10}
                   style={[
                     styles.indicator,
                     {
@@ -210,6 +233,25 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
           <Text style={[styles.price, { color: colors.text }]}>
             {formatCurrency(product.price)}
           </Text>
+
+          {/* Variations */}
+          {product.variations && product.variations.length > 0 && (
+            <View style={styles.variationsSection}>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+                Available Options
+              </Text>
+              {product.variations.map((variation) => (
+                <View key={variation.name} style={styles.variationRow}>
+                  <Text style={[styles.variationName, { color: colors.mutedText }]}>
+                    {variation.name}:
+                  </Text>
+                  <Text style={[styles.variationOptions, { color: colors.text }]}>
+                    {variation.options.join(", ")}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
 
           {/* Description */}
           <View style={styles.descriptionContainer}>
@@ -412,6 +454,30 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "800",
     marginTop: 4,
+  },
+  variationsSection: {
+    gap: 8,
+    marginTop: 8,
+    paddingVertical: 12,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+  variationRow: {
+    flexDirection: "row",
+    gap: 6,
+    flexWrap: "wrap",
+  },
+  variationName: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  variationOptions: {
+    fontSize: 13,
+    fontWeight: "500",
+    flex: 1,
   },
   descriptionContainer: {
     gap: 8,

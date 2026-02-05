@@ -169,9 +169,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={[styles.totalValue, { color: colors.text }]}>
                 {formattedSelectedTotal}
               </Text>
-              <Text style={[styles.subNote, { color: colors.mutedText }]}>
-                Reward points +10
-              </Text>
+              
             </View>
           </View>
 

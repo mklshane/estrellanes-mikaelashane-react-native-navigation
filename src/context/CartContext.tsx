@@ -25,7 +25,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 				...state,
 				items: {
 					...state.items,
-					[action.product.id]: { product: action.product, quantity: nextQty, isSelected: true },
+					[action.product.id]: {
+						product: action.product,
+						quantity: nextQty,
+						addedAt: Date.now(),
+						isSelected: true,
+					},
 				},
 				selectedItems: newSelected,
 			};
@@ -153,7 +158,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 		load();
 	}, []);
 
-	const items = useMemo(() => Object.values(state.items), [state.items]);
+	const items = useMemo(
+		() =>
+			Object.values(state.items).sort(
+				(a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0)
+			),
+		[state.items]
+	);
 
 	const totalItems = useMemo(
 		() => items.reduce((sum, item) => sum + item.quantity, 0),

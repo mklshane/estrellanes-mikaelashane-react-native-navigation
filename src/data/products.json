@@ -4,6 +4,13 @@
     "name": "Botanical Water Cream",
     "price": 999.99,
     "description": "A lightweight, silicone free hydrator which primes, smoothes and protects with blue lotus, blue daisy, HA and malachite.",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "50ml", "100ml"]
+      }
+    ],
     "images": [
       "../assets/products/p1/p1-1.png",
       "../assets/products/p1/p1-2.png",
@@ -15,6 +22,13 @@
     "name": "Glossier You",
     "price": 2500,
     "description": "Glossier You is a soft, warm and familiar skin-scent enhancing fragrance. Sparkling Pink Pepper opens into earthy Iris, settling into a strong, slightly-sweet base of Ambrette and Ambrox that wears close to skin–so it smells a",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["10ml", "50ml", "100ml"]
+      }
+    ],
     "images": [
       "../assets/products/p2/p2-1.png",
       "../assets/products/p2/p2-2.png",
@@ -25,8 +39,13 @@
     "id": "3",
     "name": "Cloud Paint",
     "price": 1700,
-    "description": "A seamless cheek colors in both blush and bronzer shades inspired by golden hour sunsets, so natural it’s like your skin made it. Easy to wear and apply, each shade is sheer enough to blend and layer without going overboard.",
-    "images": [
+    "description": "A seamless cheek colors in both blush and bronzer shades inspired by golden hour sunsets, so natural it’s like your skin made it. Easy to wear and apply, each shade is sheer enough to blend and layer without going overboard.",    "type": "beauty",
+    "variations": [
+      {
+        "name": "Shade",
+        "options": ["Dusk", "Dawn", "Haze", "Beam", "Storm", "Eve"]
+      }
+    ],    "images": [
       "../assets/products/p3/p3-1.png",
       "../assets/products/p3/p3-2.png",
       "../assets/products/p3/p3-3.png"
@@ -36,8 +55,13 @@
     "id": "4",
     "name": "The Beauty Bag",
     "price": 3100,
-    "description": "This bag is the ultimate home for your beauty routine. It’s tall enough to fit all of your essentials (even full-size skincare!), but still easily slips into your tote. The coated cotton material means you won’t have to worry about spills or splashes, with a removable snap-button interior pouch, and plenty of extra pockets to keep you organized—so you’re never stuck digging for your favorite products.",
-    "images": [
+    "description": "This bag is the ultimate home for your beauty routine. It’s tall enough to fit all of your essentials (even full-size skincare!), but still easily slips into your tote. The coated cotton material means you won’t have to worry about spills or splashes, with a removable snap-button interior pouch, and plenty of extra pockets to keep you organized—so you’re never stuck digging for your favorite products.",    "type": "accessories",
+    "variations": [
+      {
+        "name": "Color",
+        "options": ["Pink", "Black", "Navy", "White"]
+      }
+    ],    "images": [
       "../assets/products/p4/p4-1.png",
       "../assets/products/p4/p4-2.png",
       "../assets/products/p4/p4-3.png"
@@ -45,9 +69,16 @@
   },
   {
     "id": "5",
-    "name": "The Ordinary Niacinamide 10% + Zinc 1% 60ml",
+    "name": "The Ordinary Niacinamide 10% + Zinc 1%",
     "price": 1075.75,
     "description": "The serum is High-Strength Vitamin and Mineral Blemish Formula, formulated with 10% highly concentrated nicotinic acid extract (vitamin B3), supplemented with 1% zinc (zinc salt of pyrrolidone carboxylic acid) to effectively reduce the look of blemishes and balance visible sebum activity, anti-oxidation, anti-inflammatory and oil control. Restore smooth and refreshing skin!",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "60ml"]
+      }
+    ],
     "images": [
       "../assets/products/p5/p5-1.png",
       "../assets/products/p5/p5-2.png",
@@ -58,8 +89,13 @@
     "id": "6",
     "name": "ESTEE LAUDER Advanced Night Repair Synchronized Multi-Recovery Complex 50ml",
     "price": 1200,
-    "description": "This night serum is made under the brand’s exclusive ChronoluxTM Power Signal Technology, to maximize collagens and skin cells' nighttime renewal. It can significantly reduce fine lines and wrinkles, improve the skin tone and moisturize skin. What you can get is the supple, radiant and youthful skin after a night of sleep!",
-    "images": [
+    "description": "This night serum is made under the brand’s exclusive ChronoluxTM Power Signal Technology, to maximize collagens and skin cells' nighttime renewal. It can significantly reduce fine lines and wrinkles, improve the skin tone and moisturize skin. What you can get is the supple, radiant and youthful skin after a night of sleep!",    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "50ml", "75ml"]
+      }
+    ],    "images": [
       "../assets/products/p6/p6-1.png",
       "../assets/products/p6/p6-2.png",
       "../assets/products/p6/p6-3.png"
@@ -67,9 +103,16 @@
   },
   {
     "id": "7",
-    "name": "THE ORDINARY AHA 30% + BHA 2% Peeling Solution 30ml",
+    "name": "THE ORDINARY AHA 30% + BHA 2% Peeling Solution",
     "price": 1120,
     "description": "Formulated with AHA 30% and BHA 2%, it can reduce the appearance of pimples, blackheads, acne marks and black blemishes. Brighten your skin from the inside to the outside, leaving a delicate and tender skin!",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "60ml"]
+      }
+    ],
     "images": [
       "../assets/products/p7/p7-1.png",
       "../assets/products/p7/p7-2.png",
@@ -78,9 +121,16 @@
   },
   {
     "id": "8",
-    "name": " Libre Eau De Parfum Spray 90ml/3oz",
+    "name": " Libre Eau De Parfum Spray",
     "price": 8469,
     "description": "An oriental fougere fragrance for modern women. Crisp, spicy, sweet, vibrant, sophisticated & energizing.Top notes are mandarin orange, lavender, blackcurrant & petitgrain",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "50ml", "90ml"]
+      }
+    ],
     "images": [
       "../assets/products/p8/p8-1.png",
       "../assets/products/p8/p8-2.png",
@@ -89,9 +139,16 @@
   },
   {
     "id": "9",
-    "name": "Toy Boy Eau De Parfum Spray 50ml/1.7oz",
+    "name": "Toy Boy Eau De Parfum Spray",
     "price": 3276,
     "description": "A woody spicy fragrance for young men. Fresh, spicy, sweet, vibrant, powdery & bewitching. Top notes of Italian bergamot, green pear, elemi, pink pepper & Indonesian nutmeg",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["30ml", "50ml", "100ml"]
+      }
+    ],
     "images": [
       "../assets/products/p9/p9-1.png",
       "../assets/products/p9/p9-2.png",
@@ -99,13 +156,76 @@
     ]
   },  {
     "id": "10",
-    "name": "HADA LABO Super Hyaluronic Lotion Light 170ml",
+    "name": "HADA LABO Super Hyaluronic Lotion Light",
     "price": 1351,
     "description": "It is infused with three types of hyaluronic acid to penetrate deeply to moisturize and soften skin, meanwhile enhancing the water binding ability of skin, leaving your skin smooth, soft, supple and firm. One drop locks up an ocean. Once you apply, skin becomes supple, nourished and elastic. Weak acidic. Low irritation. Free from fragrance, additive, oil or alcohol.",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["100ml", "170ml"]
+      }
+    ],
     "images": [
       "../assets/products/p10/p10-1.png",
       "../assets/products/p10/p10-2.png",
       "../assets/products/p10/p10-3.png"
+    ]
+  }, {
+    "id": "11",
+    "name": "Unlimited Double Touch Liquid Lipstick",
+    "price": 1299,
+    "description": "Long-lasting liquid lipstick in 2 steps: an extraordinary combination of color base and lip gloss with an intense and luminous finish. The color sets on the lips for a lasting result up to 12 hours",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Shade",
+        "options": ["Rose Nude", "Pink Blush", "Coral Sunset", "Berry Red", "Mauve Dream", "Plum Wine"]
+      }
+    ],
+    "images": [
+      "../assets/products/p11/p11-1.png",
+      "../assets/products/p11/p11-2.png",
+      "../assets/products/p11/p11-3.png"
+    ]
+  },
+  {
+    "id": "12",
+    "name": "SunExpert Tinted Sunscreen SPF50 50ml Buy 1 Take 1",
+    "price": 499.75,
+    "description": "Get superior sun protection plus that flawless no make-up look everyday! Use alone for instant perfecting coverage, or layer under your favorite foundation or powder. SPF 50 and PA++++ ensures broad spectrum protection against harmful UV rays",
+    "type": "beauty",
+    "variations": [
+      {
+        "name": "Shade",
+        "options": ["Light", "Natural", "Medium", "Tan"]
+      }
+    ],
+    "images": [
+      "../assets/products/p12/p12-1.png",
+      "../assets/products/p12/p12-2.png",
+      "../assets/products/p12/p12-3.png"
+    ]
+  }, {
+    "id": "13",
+    "name": "ADIDAS Handball Spezial Shoes",
+    "price": 4930.00,
+    "description": "Classic yet fresh. The adidas Originals Handball Spezial shoes bring a legendary indoor model to the streets. Originally made for handball courts in 1979, these shoes transition effortlessly to casual style.",
+    "type": "shoes",
+    "variations": [
+      {
+        "name": "Size",
+        "options": ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"]
+      },
+      {
+        "name": "Color",
+        "options": ["Black/White", "Navy/Gum", "Green/White", "Red/White"]
+      }
+    ],
+    "images": [
+      "../assets/products/p13/p13-1.png",
+      "../assets/products/p13/p13-2.png",
+      "../assets/products/p13/p13-3.png"
     ]
   }
 ]

@@ -101,16 +101,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   headerRow: {
-    paddingTop: 16,
+    paddingTop: 12,
     paddingHorizontal: 16,
-    paddingBottom: 12,
+    paddingBottom: 8,
     gap: 6,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   title: {
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: "700",
     letterSpacing: -0.3,
   },

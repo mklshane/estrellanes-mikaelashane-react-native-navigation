@@ -35,11 +35,20 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
       ]}
     >
       {imageSource ? (
-        <Image
-          source={imageSource}
-          style={[styles.image, { backgroundColor: colors.surface }]}
-          resizeMode="cover"
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            source={imageSource}
+            style={[styles.image, { backgroundColor: colors.surface }]}
+            resizeMode="cover"
+          />
+          {product.type && (
+            <View style={[styles.typeBadge, { backgroundColor: isDarkMode ? "#81D14F" : "#0F172A" }]}>
+              <Text style={[styles.typeBadgeText, { color: isDarkMode ? "#000" : "#FFF" }]}>
+                {product.type}
+              </Text>
+            </View>
+          )}
+        </View>
       ) : (
         <View
           style={[styles.imagePlaceholder, { backgroundColor: colors.surface }]}
@@ -101,9 +110,28 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 3,
   },
+  imageContainer: {
+    position: "relative",
+    width: "100%",
+    height: 200,
+  },
   image: {
     width: "100%",
     height: 200,
+  },
+  typeBadge: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  typeBadgeText: {
+    fontSize: 10,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   imagePlaceholder: {
     width: "100%",

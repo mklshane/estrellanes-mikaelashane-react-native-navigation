@@ -25,14 +25,27 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
 }) => {
   const { colors, isDarkMode } = useTheme();
   const [qty, setQty] = useState(1);
+  const [selectedVariations, setSelectedVariations] = useState<Record<string, string>>({});
 
   const resetAndClose = () => {
     setQty(1);
+    setSelectedVariations({});
     onClose();
   };
 
   const handleConfirm = () => {
     if (!product) return;
+    
+    // Check if all variations are selected
+    if (product.variations && product.variations.length > 0) {
+      const allVariationsSelected = product.variations.every(
+        (variation) => selectedVariations[variation.name]
+      );
+      if (!allVariationsSelected) {
+        return; // Don't proceed if not all variations are selected
+      }
+    }
+    
     onConfirm(product, Math.max(1, qty));
     resetAndClose();
   };
@@ -61,6 +74,48 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
           <Text style={[styles.subtitle, { color: colors.mutedText }]}>
             {product?.name}
           </Text>
+
+          {/* Variations */}
+          {product?.variations && product.variations.length > 0 && (
+            <View style={styles.variationsContainer}>
+              {product.variations.map((variation) => (
+                <View key={variation.name} style={styles.variationGroup}>
+                  <Text style={[styles.variationLabel, { color: colors.text }]}>
+                    {variation.name}
+                  </Text>
+                  <View style={styles.optionsGrid}>
+                    {variation.options.map((option) => {
+                      const isSelected = selectedVariations[variation.name] === option;
+                      return (
+                        <Pressable
+                          key={option}
+                          onPress={() => setSelectedVariations(prev => ({ ...prev, [variation.name]: option }))}
+                          style={[
+                            styles.optionChip,
+                            {
+                              borderColor: isSelected ? colors.text : colors.border,
+                              backgroundColor: isSelected ? (isDarkMode ? "#81D14F" : "#0F172A") : colors.surface,
+                            },
+                          ]}
+                        >
+                          <Text
+                            style={[
+                              styles.optionText,
+                              {
+                                color: isSelected ? (isDarkMode ? "#000" : "#FFF") : colors.text,
+                              },
+                            ]}
+                          >
+                            {option}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
 
           <View
             style={[
@@ -99,10 +154,32 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
             </Pressable>
             <Pressable
               onPress={handleConfirm}
+              disabled={
+                product?.variations &&
+                product.variations.length > 0 &&
+                !product.variations.every(
+                  (variation) => selectedVariations[variation.name]
+                )
+              }
               style={[
                 styles.primaryBtn,
                 {
-                  backgroundColor: "#81D14F",
+                  backgroundColor:
+                    product?.variations &&
+                    product.variations.length > 0 &&
+                    !product.variations.every(
+                      (variation) => selectedVariations[variation.name]
+                    )
+                      ? colors.mutedText
+                      : "#81D14F",
+                  opacity:
+                    product?.variations &&
+                    product.variations.length > 0 &&
+                    !product.variations.every(
+                      (variation) => selectedVariations[variation.name]
+                    )
+                      ? 0.5
+                      : 1,
                 },
               ]}
             >
@@ -147,6 +224,32 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 13,
     fontWeight: "500",
+  },
+  variationsContainer: {
+    gap: 16,
+    marginVertical: 8,
+  },
+  variationGroup: {
+    gap: 8,
+  },
+  variationLabel: {
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  optionsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  optionChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1.5,
+  },
+  optionText: {
+    fontSize: 13,
+    fontWeight: "600",
   },
   qtyControl: {
     flexDirection: "row",

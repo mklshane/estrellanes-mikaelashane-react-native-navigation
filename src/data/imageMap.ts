@@ -1,4 +1,3 @@
-// Map string asset paths from products.json to static requires so Metro can bundle them.
 const imageMap: Record<string, any> = {
   "../assets/products/p1/p1-1.png": require("../../assets/products/p1/p1-1.png"),
   "../assets/products/p1/p1-2.png": require("../../assets/products/p1/p1-2.png"),
@@ -30,6 +29,15 @@ const imageMap: Record<string, any> = {
   "../assets/products/p10/p10-1.png": require("../../assets/products/p10/p10-1.png"),
   "../assets/products/p10/p10-2.png": require("../../assets/products/p10/p10-2.png"),
   "../assets/products/p10/p10-3.png": require("../../assets/products/p10/p10-3.png"),
+  "../assets/products/p11/p11-1.png": require("../../assets/products/p11/p11-1.png"),
+  "../assets/products/p11/p11-2.png": require("../../assets/products/p11/p11-2.png"),
+  "../assets/products/p11/p11-3.png": require("../../assets/products/p11/p11-3.png"),
+  "../assets/products/p12/p12-1.png": require("../../assets/products/p12/p12-1.png"),
+  "../assets/products/p12/p12-2.png": require("../../assets/products/p12/p12-2.png"),
+  "../assets/products/p12/p12-3.png": require("../../assets/products/p12/p12-3.png"),
+  "../assets/products/p13/p13-1.png": require("../../assets/products/p13/p13-1.png"),
+  "../assets/products/p13/p13-2.png": require("../../assets/products/p13/p13-2.png"),
+  "../assets/products/p13/p13-3.png": require("../../assets/products/p13/p13-3.png"),
 };
 
 export const resolveImageSource = (source?: string) => {
