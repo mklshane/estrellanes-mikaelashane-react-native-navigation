@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
@@ -41,29 +41,32 @@ export const AppNavigator = () => {
           headerTintColor: colors.text,
           headerTitleStyle: { color: colors.text },
           contentStyle: { backgroundColor: colors.background },
-          headerRight: () => (
-            <Pressable
-              onPress={toggleTheme}
-              hitSlop={12}
-              style={{
-                width: 40,
-                height: 40,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons
-                name={isDarkMode ? "sunny-outline" : "moon-outline"}
-                size={24}
-                color={colors.text}
-              />
-            </Pressable>
-          ),
         }}
       >
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={({ navigation }) => ({
+            title: "Discover",
+            headerRight: () => (
+              <Pressable
+                onPress={toggleTheme}
+                hitSlop={12}
+                style={{
+                  width: 40,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Ionicons
+                  name={isDarkMode ? "sunny-outline" : "moon-outline"}
+                  size={24}
+                  color={colors.text}
+                />
+              </Pressable>
+            ),
+          })}
         />
         <Stack.Screen
           name="Shopping Cart"

@@ -30,9 +30,9 @@ const CartButton: React.FC<CartButtonProps> = ({ count, onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",

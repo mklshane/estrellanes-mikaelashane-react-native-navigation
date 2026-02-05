@@ -63,20 +63,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       edges={["left", "right", "bottom"]}
       style={{ backgroundColor: colors.background, flex: 1 }}
     >
-      <View style={styles.headerRow}>
-        <View >
-          <Text style={[styles.title, { color: colors.text }]}>Discover</Text>
-          <Text style={[styles.subtitle, { color: colors.mutedText }]}>
-            Curated picks for your daily essentials
-          </Text>
-        </View>
-
+      <View style={styles.searchRow}>
+        <SearchBar
+          value={query}
+          onChangeText={setQuery}
+          wrapperStyle={styles.searchWrapper}
+        />
         <CartButton
           count={totalItems}
           onPress={() => navigation.navigate("Shopping Cart")}
         />
       </View>
-      <SearchBar value={query} onChangeText={setQuery} />
       <FlatList
         data={gridData}
         keyExtractor={(item, index) => item.id || `placeholder-${index}`}
@@ -86,10 +83,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <Text style={[styles.emptyTitle, { color: colors.text }]}
-            >No matches found</Text>
-            <Text style={[styles.emptySubtitle, { color: colors.mutedText }]}
-            >Try a different keyword.</Text>
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>
+              No matches found
+            </Text>
+            <Text style={[styles.emptySubtitle, { color: colors.mutedText }]}>
+              Try a different keyword.
+            </Text>
           </View>
         }
         showsVerticalScrollIndicator={false}
@@ -100,23 +99,18 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  headerRow: {
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 8,
-    gap: 6,
+  searchRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 6,
   },
-  title: {
-    fontSize: 23,
-    fontWeight: "700",
-    letterSpacing: -0.3,
-  },
-  subtitle: {
-    fontSize: 14,
-    fontWeight: "500",
+  searchWrapper: {
+    flex: 1,
+    paddingHorizontal: 0,
+    paddingBottom: 0,
   },
   row: {
     gap: 14,

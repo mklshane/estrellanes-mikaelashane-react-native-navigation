@@ -1,10 +1,12 @@
 import React from "react";
 import {
   Pressable,
+  StyleProp,
   StyleSheet,
   Text,
   TextInput,
   View,
+  ViewStyle,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
@@ -14,6 +16,7 @@ type SearchBarProps = {
   onChangeText: (text: string) => void;
   placeholder?: string;
   onClear?: () => void;
+  wrapperStyle?: StyleProp<ViewStyle>;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
@@ -21,12 +24,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onChangeText,
   placeholder = "Search products",
   onClear,
+  wrapperStyle,
 }) => {
   const { colors } = useTheme();
   const showClear = value.trim().length > 0;
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, wrapperStyle]}>
       <View
         style={[
           styles.container,
