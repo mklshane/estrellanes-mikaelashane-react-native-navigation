@@ -9,6 +9,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import CartButton from "../../components/CartButton";
 import SearchBar from "../../components/Home/SearchBar";
+import EmptyState from "../../components/Home/EmptyState";
 import { styles } from "./Home.styles";
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
@@ -84,16 +85,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             numColumns={2}
             columnWrapperStyle={styles.row}
             contentContainerStyle={styles.listContent}
-            ListEmptyComponent={
-              <View style={styles.emptyState}>
-                <Text style={[styles.emptyTitle, { color: colors.text }]}>
-                  No matches found
-                </Text>
-                <Text style={[styles.emptySubtitle, { color: colors.mutedText }]}>
-                  Try a different keyword.
-                </Text>
-              </View>
-            }
+            ListEmptyComponent={<EmptyState />}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           />
