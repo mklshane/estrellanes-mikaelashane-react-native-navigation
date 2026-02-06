@@ -17,6 +17,7 @@ const initialState: CartState = { items: {}, selectedItems: new Set() };
 const cartReducer = (state: CartState, action: CartAction): CartState => {
 	switch (action.type) {
 		case "ADD": {
+			// Merge quantities and mark the item as selected on add.
 			const existing = state.items[action.product.id];
 			const nextQty = Math.max(1, (existing?.quantity ?? 0) + action.quantity);
 			const newSelected = new Set(state.selectedItems);
@@ -43,6 +44,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 			return { items: next, selectedItems: newSelected };
 		}
 		case "SET_QUANTITY": {
+			// Remove item if quantity is zero or less.
 			if (action.quantity <= 0) {
 				const next = { ...state.items };
 				delete next[action.productId];
@@ -63,6 +65,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 		case "CLEAR":
 			return initialState;
 		case "HYDRATE":
+			// Restore from storage and ensure selectedItems is a Set.
 			return {
 				items: action.state.items,
 				selectedItems: action.state.selectedItems instanceof Set 
@@ -79,10 +82,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 			return { ...state, selectedItems: newSelected };
 		}
 		case "SELECT_ALL": {
+			// Select every item currently in the cart.
 			const newSelected = new Set(Object.keys(state.items));
 			return { ...state, selectedItems: newSelected };
 		}
 		case "DESELECT_ALL": {
+			// Clear all selections.
 			return { ...state, selectedItems: new Set() };
 		}
 		default:
@@ -137,6 +142,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 	const [hydrated, setHydrated] = useState(false);
 
 	useEffect(() => {
+		// Hydrate cart state from storage on first load.
 		const load = async () => {
 			try {
 				const raw = await AsyncStorage.getItem("cart-items");
@@ -158,6 +164,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 		load();
 	}, []);
 
+	// Sort items by recency for consistent UI ordering.
 	const items = useMemo(
 		() =>
 			Object.values(state.items).sort(
@@ -178,7 +185,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		if (!hydrated) return;
-		// Convert Set to array for JSON serialization
+		// Convert Set to array for JSON serialization.
 		const stateToSave = {
 			items: state.items,
 			selectedItems: Array.from(state.selectedItems),
@@ -235,6 +242,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 	const isItemSelected = (productId: string) => state.selectedItems.has(productId);
 
+	// Derived collections for selection-based totals.
 	const selectedItems = useMemo(
 		() => items.filter((item) => state.selectedItems.has(item.product.id)),
 		[items, state.selectedItems]

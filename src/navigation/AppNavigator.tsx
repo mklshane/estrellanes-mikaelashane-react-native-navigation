@@ -1,17 +1,16 @@
 import React, { useMemo } from "react";
-import { Pressable, View } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/Home/HomeScreen";
 import CartScreen from "../screens/Cart/CartScreen";
 import CheckoutScreen from "../screens/Checkout/CheckoutScreen";
 import ProductDetailsScreen from "../screens/ProductDetails/ProductDetailsScreen";
 import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,22 +41,11 @@ export const AppNavigator = () => {
           headerTitleStyle: { color: colors.text },
           contentStyle: { backgroundColor: colors.background },
           headerRight: () => (
-            <Pressable
-              onPress={toggleTheme}
-              hitSlop={12}
-              style={{
-                width: 40,
-                height: 40,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons
-                name={isDarkMode ? "sunny-outline" : "moon-outline"}
-                size={24}
-                color={colors.text}
-              />
-            </Pressable>
+            <ThemeToggle
+              isDarkMode={isDarkMode}
+              color={colors.text}
+              onToggle={toggleTheme}
+            />
           ),
         }}
       >
