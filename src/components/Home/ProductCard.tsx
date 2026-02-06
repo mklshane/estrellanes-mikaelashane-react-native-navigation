@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Product } from "../types";
-import { useTheme } from "../context/ThemeContext";
-import { resolveImageSource } from "../data/imageMap";
-import AddToCartModal from "./AddToCartModal";
-import { formatCurrency } from "../utils/formatters";
+import { Product } from "../../types";
+import { useTheme } from "../../context/ThemeContext";
+import { resolveImageSource } from "../../data/imageMap";
+import AddToCartModal from "../AddToCartModal";
+import { formatCurrency } from "../../utils/formatters";
 
 type Props = {
   product: Product;

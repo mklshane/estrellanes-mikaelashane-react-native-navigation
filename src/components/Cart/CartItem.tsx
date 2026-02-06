@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View, ImageSourcePropType } from "react-native";
-import { CartItem as CartItemType } from "../types";
-import { formatCurrency } from "../utils/formatters";
-import { ThemeColors } from "../styles/colors";
+import { CartItem as CartItemType } from "../../types";
+import { formatCurrency } from "../../utils/formatters";
+import { ThemeColors } from "../../styles/colors";
 
 interface CartItemProps {
   item: CartItemType;
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     gap: 10,
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   itemImageWrapper: {
     width: 80,

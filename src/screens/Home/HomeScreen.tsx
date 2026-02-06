@@ -3,12 +3,12 @@ import { FlatList, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Props } from "../../navigation/props";
 import products from "../../data/products.json";
-import ProductCard from "../../components/ProductCard";
+import ProductCard from "../../components/Home/ProductCard";
 import { Product } from "../../types";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import CartButton from "../../components/CartButton";
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/Home/SearchBar";
 import { styles } from "./Home.styles";
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {

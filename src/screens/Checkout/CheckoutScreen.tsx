@@ -6,9 +6,9 @@ import { Props } from "../../navigation/props";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import { resolveImageSource } from "../../data/imageMap";
-import OrderItem from "../../components/OrderItem";
-import OrderSummary from "../../components/OrderSummary";
-import SuccessModal from "../../components/SuccessModal";
+import OrderItem from "../../components/Checkout/OrderItem";
+import OrderSummary from "../../components/Checkout/OrderSummary";
+import SuccessModal from "../../components/Checkout/SuccessModal";
 import { globalStyles } from "../../styles/globalStyles";
 import { styles } from "./Checkout.styles";
 

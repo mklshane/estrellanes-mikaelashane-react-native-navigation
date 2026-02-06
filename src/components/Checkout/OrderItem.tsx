@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, Text, View, ImageSourcePropType } from "react-native";
-import { CartItem as CartItemType } from "../types";
-import { formatCurrency } from "../utils/formatters";
-import { ThemeColors } from "../styles/colors";
+import { CartItem as CartItemType } from "../../types";
+import { formatCurrency } from "../../utils/formatters";
+import { ThemeColors } from "../../styles/colors";
 
 interface OrderItemProps {
   item: CartItemType;

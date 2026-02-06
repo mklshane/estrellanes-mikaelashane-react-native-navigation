@@ -11,7 +11,7 @@ import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
 import { resolveImageSource } from "../../data/imageMap";
 import { formatCurrency } from "../../utils/formatters";
-import CartItem from "../../components/CartItem";
+import CartItem from "../../components/Cart/CartItem";
 import { globalStyles } from "../../styles/globalStyles";
 import { styles } from "./Cart.styles";
 

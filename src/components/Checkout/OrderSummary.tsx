@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { formatCurrency } from "../utils/formatters";
-import { ThemeColors } from "../styles/colors";
+import { formatCurrency } from "../../utils/formatters";
+import { ThemeColors } from "../../styles/colors";
 
 interface OrderSummaryProps {
   subtotal: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { ThemeColors } from "../styles/colors";
+import { ThemeColors } from "../../styles/colors";
 
 interface SuccessModalProps {
   visible: boolean;
