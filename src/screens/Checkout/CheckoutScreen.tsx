@@ -9,6 +9,7 @@ import { resolveImageSource } from "../../data/imageMap";
 import OrderItem from "../../components/OrderItem";
 import OrderSummary from "../../components/OrderSummary";
 import SuccessModal from "../../components/SuccessModal";
+import { globalStyles } from "../../styles/globalStyles";
 import { styles } from "./Checkout.styles";
 
 const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
@@ -46,26 +47,30 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
       <SuccessModal
         visible={showSuccess}
         message="Order Placed Successfully!"
-        onDismiss={handleSuccessClose}
-        duration={2000}
+        onConfirm={handleSuccessClose}
         colors={colors}
       />
       <View style={{ flex: 1 }}>
         {selectedItems.length === 0 ? (
           <View
             style={[
+              globalStyles.emptyContainer,
               styles.emptyContainer,
               { backgroundColor: colors.background },
             ]}
           >
-            <View style={styles.emptyIconWrapper}>
+            <View style={[globalStyles.emptyIconWrapper, styles.emptyIconWrapper]}>
               <Text style={styles.emptyIcon}>📦</Text>
             </View>
-            <Text style={[styles.emptyTitle, { color: colors.text }]}>
+            <Text style={[globalStyles.emptyTitle, styles.emptyTitle, { color: colors.text }]}>
               No Items to Checkout
             </Text>
             <Text
-              style={[styles.emptySubtitle, { color: colors.mutedText }]}
+              style={[
+                globalStyles.emptySubtitle,
+                styles.emptySubtitle,
+                { color: colors.mutedText },
+              ]}
             >
               Please select items from your cart
             </Text>
@@ -96,7 +101,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
       {selectedItems.length > 0 && (
         <View
           style={[
-            styles.bottomBar,
+            globalStyles.bottomBar,
             {
               backgroundColor: colors.card,
               borderTopColor: colors.border,
@@ -110,9 +115,10 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
           
           <Pressable
             style={[
+              globalStyles.checkoutBtn,
               styles.checkoutBtn,
               {
-                backgroundColor: colors.ctaGreen,
+                backgroundColor: colors.ctaPeach,
                 opacity: isLoading ? 0.6 : 1,
               },
             ]}
@@ -121,7 +127,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
           >
             <Text
               style={[
-                styles.checkoutText,
+                globalStyles.checkoutText,
                 { color: isDarkMode ? colors.background : "#000000" },
               ]}
             >

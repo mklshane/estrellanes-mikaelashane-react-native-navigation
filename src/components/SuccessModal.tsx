@@ -1,40 +1,30 @@
-import React, { useEffect } from "react";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { ThemeColors } from "../styles/colors";
 
 interface SuccessModalProps {
   visible: boolean;
   message?: string;
-  onDismiss?: () => void;
-  duration?: number;
-  colors: any;
+  onConfirm?: () => void;
+  colors: ThemeColors;
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = ({
   visible,
   message = "Order Placed Successfully!",
-  onDismiss,
-  duration = 3000,
+  onConfirm,
   colors,
 }) => {
-  useEffect(() => {
-    if (visible && onDismiss) {
-      const timer = setTimeout(() => {
-        onDismiss();
-      }, duration);
-      return () => clearTimeout(timer);
-    }
-  }, [visible, onDismiss, duration]);
-
   return (
     <Modal
       transparent
       visible={visible}
       animationType="fade"
-      onRequestClose={() => {}}
+      onRequestClose={onConfirm}
     >
       <View style={styles.overlay}>
         <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <View style={[styles.iconWrapper, { backgroundColor: colors.ctaGreen }]}>
+          <View style={[styles.iconWrapper, { backgroundColor: colors.ctaPeach }]}>
             <Text style={styles.icon}>✓</Text>
           </View>
           <Text style={[styles.title, { color: colors.text }]}>
@@ -43,6 +33,17 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
           <Text style={[styles.subtitle, { color: colors.mutedText }]}>
             Thank you for your purchase
           </Text>
+          <Pressable
+            onPress={onConfirm}
+            style={[
+              styles.okButton,
+              { backgroundColor: colors.ctaPeach },
+            ]}
+          >
+            <Text style={[styles.okButtonText, { color: "#000000" }]}>
+              OK
+            </Text>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -90,6 +91,18 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "500",
     textAlign: "center",
+  },
+  okButton: {
+    marginTop: 6,
+    borderRadius: 12,
+    paddingHorizontal: 22,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  okButtonText: {
+    fontSize: 14,
+    fontWeight: "700",
   },
 });
 

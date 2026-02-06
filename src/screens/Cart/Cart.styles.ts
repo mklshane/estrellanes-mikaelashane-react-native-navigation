@@ -52,41 +52,23 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
   },
   emptyContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-    alignItems: "center",
-    justifyContent: "center",
     gap: 24,
   },
   emptyIconWrapper: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(15, 23, 42, 0.05)",
+    backgroundColor: "rgba(156, 156, 156, 0.25)",
   },
   emptyIcon: {
     fontSize: 56,
   },
   emptyTitle: {
     fontSize: 22,
-    fontWeight: "800",
-    letterSpacing: -0.3,
-    textAlign: "center",
   },
   emptySubtitle: {
     fontSize: 14,
-    fontWeight: "500",
-    textAlign: "center",
     lineHeight: 20,
-  },
-  bottomBar: {
-    borderTopWidth: 1,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 16,
-    gap: 12,
   },
   totalRow: {
     flexDirection: "row",
@@ -107,11 +89,5 @@ export const styles = StyleSheet.create({
   },
   checkoutBtn: {
     borderRadius: 14,
-    paddingVertical: 14,
-    alignItems: "center",
-  },
-  checkoutText: {
-    fontSize: 16,
-    fontWeight: "700",
   },
 });

@@ -68,12 +68,17 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
           ]}
           onPress={(e) => e.stopPropagation()}
         >
-          <Text style={[styles.title, { color: colors.text }]}>
-            Add to Cart
-          </Text>
-          <Text style={[styles.subtitle, { color: colors.mutedText }]}>
-            {product?.name}
-          </Text>
+          <View style={styles.headerRow}>
+            <View style={styles.headerText}>
+              <Text style={[styles.title, { color: colors.text }]}>
+                Add to Cart
+              </Text>
+              <Text style={[styles.subtitle, { color: colors.mutedText }]}>
+                {product?.name}
+              </Text>
+            </View>
+            
+          </View>
 
           {/* Variations */}
           {product?.variations && product.variations.length > 0 && (
@@ -94,7 +99,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                             styles.optionChip,
                             {
                               borderColor: isSelected ? colors.text : colors.border,
-                              backgroundColor: isSelected ? colors.ctaGreen : colors.surface,
+                              backgroundColor: isSelected ? colors.ctaPeach : colors.surface,
                             },
                           ]}
                         >
@@ -102,7 +107,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                             style={[
                               styles.optionText,
                               {
-                                color: isSelected ? (isDarkMode ? "#000" : "#FFF") : colors.text,
+                                color: isSelected ? "#1F2937" : colors.text,
                               },
                             ]}
                           >
@@ -127,13 +132,13 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
             ]}
           >
             <Pressable onPress={decrement} hitSlop={12}>
-              <Ionicons name="remove" size={20} color={colors.text} />
+              <Ionicons name="remove" size={18} color={colors.text} />
             </Pressable>
             <Text style={[styles.qtyValue, { color: colors.text }]}>
               {qty}
             </Text>
             <Pressable onPress={increment} hitSlop={12}>
-              <Ionicons name="add" size={20} color={colors.text} />
+              <Ionicons name="add" size={18} color={colors.text} />
             </Pressable>
           </View>
 
@@ -171,7 +176,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                       (variation) => selectedVariations[variation.name]
                     )
                       ? colors.mutedText
-                      : colors.ctaGreen,
+                      : colors.ctaPeach,
                   opacity:
                     product?.variations &&
                     product.variations.length > 0 &&
@@ -211,13 +216,36 @@ const styles = StyleSheet.create({
   },
   sheet: {
     width: "100%",
+    borderRadius: 20,
+    borderWidth: 1,
+    padding: 22,
+    gap: 18,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  headerText: {
+    flex: 1,
+    gap: 4,
+  },
+  closeBtn: {
+    width: 32,
+    height: 32,
     borderRadius: 16,
     borderWidth: 1,
-    padding: 20,
-    gap: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  closeText: {
+    fontSize: 18,
+    fontWeight: "700",
+    lineHeight: 20,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "800",
     letterSpacing: -0.3,
   },
@@ -242,9 +270,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   optionChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 999,
     borderWidth: 1.5,
   },
   optionText: {
@@ -256,9 +284,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     borderWidth: 1,
-    borderRadius: 12,
-    paddingVertical: 14,
-    marginVertical: 8,
+    borderRadius: 14,
+    paddingVertical: 12,
+    marginVertical: 6,
   },
   qtyValue: {
     fontSize: 18,
@@ -269,13 +297,13 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     gap: 12,
-    marginTop: 8,
+    marginTop: 6,
   },
   secondaryBtn: {
     flex: 1,
     paddingVertical: 12,
     paddingHorizontal: 14,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1.5,
     alignItems: "center",
   },
@@ -287,7 +315,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
   },

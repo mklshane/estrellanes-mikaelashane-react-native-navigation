@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, ImageSourcePropType } from "react-native";
 import { CartItem as CartItemType } from "../types";
 import { formatCurrency } from "../utils/formatters";
+import { ThemeColors } from "../styles/colors";
 
 interface OrderItemProps {
   item: CartItemType;
-  colors: any;
-  image?: any;
+  colors: ThemeColors;
+  image?: ImageSourcePropType | null;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({ item, colors, image }) => {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     gap: 10,
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   itemImageWrapper: {
     width: 70,

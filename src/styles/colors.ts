@@ -9,7 +9,7 @@ export type ThemeColors = {
   primary: string;
   primaryText: string;
   accent: string;
-  ctaGreen: string;
+  ctaPeach: string;
   border: string;
   success: string;
   warning: string;
@@ -26,7 +26,7 @@ export const themeColors: Record<ThemeMode, ThemeColors> = {
     primary: "#0EA5E9",
     primaryText: "#FFFFFF",
     accent: "#F59E0B",
-    ctaGreen: "#81D14F",
+    ctaPeach: "#F5D0C5",
     border: "#E2E8F0",
     success: "#22C55E",
     warning: "#F97316",
@@ -41,7 +41,7 @@ export const themeColors: Record<ThemeMode, ThemeColors> = {
     primary: "#38BDF8",
     primaryText: "#0B1120",
     accent: "#FBBF24",
-    ctaGreen: "#81D14F",
+    ctaPeach: "#F5D0C5",
     border: "#464646",
     success: "#22C55E",
     warning: "#FB923C",

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { FlatList, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Props } from "../../navigation/props";
 import products from "../../data/products.json";
@@ -64,7 +64,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       edges={["left", "right", "bottom"]}
       style={{ backgroundColor: colors.background, flex: 1 }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <Pressable onPress={Keyboard.dismiss} accessible={false} style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <View style={styles.searchRow}>
             <SearchBar
@@ -74,7 +74,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             />
             <CartButton
               count={totalItems}
-              onPress={() => navigation.navigate("Shopping Cart")}
+              onPress={() => navigation.navigate("Cart")}
             />
           </View>
           <FlatList
@@ -98,7 +98,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             keyboardShouldPersistTaps="handled"
           />
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </SafeAreaView>
   );
 };

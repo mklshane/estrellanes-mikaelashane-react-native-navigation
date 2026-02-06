@@ -68,10 +68,10 @@ export const AppNavigator = () => {
             title: "Discover",
           })}
         />
-        <Stack.Screen
-          name="Shopping Cart"
-          component={CartScreen}
-        />
+              <Stack.Screen
+                name="Cart"
+                component={CartScreen}
+              />
         <Stack.Screen
           name="Checkout"
           component={CheckoutScreen}

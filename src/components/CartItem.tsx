@@ -1,18 +1,19 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View, ImageSourcePropType } from "react-native";
 import { CartItem as CartItemType } from "../types";
 import { formatCurrency } from "../utils/formatters";
+import { ThemeColors } from "../styles/colors";
 
 interface CartItemProps {
   item: CartItemType;
   isSelected: boolean;
-  colors: any;
+  colors: ThemeColors;
   isDarkMode: boolean;
   onToggleSelect: (productId: string) => void;
   onRemove: (productId: string) => void;
   onIncrement: (productId: string) => void;
   onDecrement: (productId: string) => void;
-  image?: any;
+  image?: ImageSourcePropType | null;
 }
 
 const CartItem: React.FC<CartItemProps> = ({
@@ -43,6 +44,14 @@ const CartItem: React.FC<CartItemProps> = ({
         },
       ]}
     >
+      <Pressable
+        onPress={() => onRemove(product.id)}
+        hitSlop={10}
+        style={styles.deleteBtn}
+      >
+        <Text style={{ color: colors.mutedText, fontSize: 18 }}>×</Text>
+      </Pressable>
+
       <Pressable
         onPress={() => onToggleSelect(product.id)}
         hitSlop={10}
@@ -114,13 +123,6 @@ const CartItem: React.FC<CartItemProps> = ({
       </View>
 
       <View style={styles.itemActions}>
-        <Pressable
-          onPress={() => onRemove(product.id)}
-          hitSlop={10}
-          style={styles.deleteBtn}
-        >
-          <Text style={{ color: colors.mutedText, fontSize: 18 }}>×</Text>
-        </Pressable>
         <View style={[styles.qtyControl, { borderColor: colors.border }]}>
           <Pressable
             style={styles.qtyBtn}
@@ -147,10 +149,13 @@ const CartItem: React.FC<CartItemProps> = ({
 
 const styles = StyleSheet.create({
   itemCard: {
+    position: "relative",
     flexDirection: "row",
     borderRadius: 16,
     borderWidth: 1,
     padding: 12,
+    paddingRight: 64,
+    paddingBottom: 18,
     gap: 12,
     alignItems: "center",
     shadowOffset: { width: 0, height: 2 },
@@ -183,6 +188,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 12,
+    borderColor: "#E5E5E5",
+    borderWidth: 1,
   },
   imagePlaceholder: {
     width: "100%",
@@ -218,11 +225,17 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   itemActions: {
+    position: "absolute",
+    right: 8,
+    bottom: 15,
     alignItems: "flex-end",
-    gap: 8,
   },
   deleteBtn: {
+    position: "absolute",
+    top: 5,
+    right: 10,
     padding: 4,
+    zIndex: 1,
   },
   qtyControl: {
     flexDirection: "row",

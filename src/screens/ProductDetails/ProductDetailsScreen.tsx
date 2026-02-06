@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dimensions,
   FlatList,
@@ -51,8 +51,6 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
   }
 
   const images = product.images || [];
-  const currentImage = resolveImageSource(images[currentImageIndex]);
-
   const handleAddToCart = (p: Product, qty: number) => {
     addToCart(p, qty);
     setShowModal(false);
@@ -119,7 +117,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
         contentContainerStyle={styles.scrollContent}
       >
         {/* Image Carousel Container */}
-        <View style={{ position: "relative", width: "100%", aspectRatio: 1 }}>
+        <View style={styles.imageStage}>
           {/* Main Image Carousel */}
           <FlatList
             ref={carouselRef}
@@ -202,41 +200,51 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
 
         {/* Product Info */}
         <View style={styles.infoSection}>
+          <View style={[styles.headerCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
+            <Text style={[styles.productName, { color: colors.text }]}>
+              {product.name}
+            </Text>
 
-          <Text style={[styles.productName, { color: colors.text }]}>
-            {product.name}
-          </Text>
-
-          {/* Rating and Reviews (if available) */}
-          {product.averageRating && (
-            <View style={styles.ratingRow}>
-              <View style={styles.ratingStars}>
-                <Ionicons name="star" size={16} color="#FFB800" />
-                <Text
-                  style={[
-                    styles.ratingText,
-                    { color: colors.text, marginLeft: 4 },
-                  ]}
+            <View style={styles.priceRow}>
+              <Text style={[styles.price, { color: colors.text }]}>
+                {formatCurrency(product.price)}
+              </Text>
+              {product.averageRating && (
+                <View style={[styles.ratingPill, { backgroundColor: colors.surface, borderColor: colors.border }]}
                 >
-                  {product.averageRating.toFixed(1)}
-                </Text>
-              </View>
-              {product.reviewCount && (
-                <Text style={[styles.reviewCount, { color: colors.mutedText }]}>
-                  ({product.reviewCount} Reviews)
-                </Text>
+                  <Ionicons name="star" size={14} color="#FFB800" />
+                  <Text style={[styles.ratingPillText, { color: colors.text }]}>
+                    {product.averageRating.toFixed(1)}
+                  </Text>
+                  {product.reviewCount && (
+                    <Text style={[styles.ratingCountText, { color: colors.mutedText }]}
+                    >
+                      ({product.reviewCount})
+                    </Text>
+                  )}
+                </View>
               )}
             </View>
-          )}
 
-          {/* Price */}
-          <Text style={[styles.price, { color: colors.text }]}>
-            {formatCurrency(product.price)}
-          </Text>
+            <View style={styles.infoPillsRow}>
+              <View style={[styles.infoPill, { backgroundColor: colors.surface, borderColor: colors.border }]}
+              >
+                <Ionicons name="checkmark-circle-outline" size={16} color={colors.text} />
+                <Text style={[styles.infoPillText, { color: colors.text }]}>In stock</Text>
+              </View>
+              <View style={[styles.infoPill, { backgroundColor: colors.surface, borderColor: colors.border }]}
+              >
+                <Ionicons name="car-outline" size={16} color={colors.text} />
+                <Text style={[styles.infoPillText, { color: colors.text }]}>Free delivery</Text>
+              </View>
+            </View>
+          </View>
 
           {/* Variations */}
           {product.variations && product.variations.length > 0 && (
-            <View style={styles.variationsSection}>
+            <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+            >
               <Text style={[styles.sectionTitle, { color: colors.text }]}>
                 Available Options
               </Text>
@@ -254,56 +262,14 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
           )}
 
           {/* Description */}
-          <View style={styles.descriptionContainer}>
+          <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
             <Text style={[styles.descriptionTitle, { color: colors.text }]}>
               About this product
             </Text>
             <Text style={[styles.description, { color: colors.mutedText }]}>
               {product.description}
             </Text>
-          </View>
-
-          {/* Placeholder Info Items */}
-          <View style={styles.infoItems}>
-            <View
-              style={[
-                styles.infoItem,
-                { backgroundColor: colors.surface, borderColor: colors.border },
-              ]}
-            >
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={20}
-                color={colors.text}
-              />
-              <Text style={[styles.infoItemText, { color: colors.text }]}>
-                In stock
-              </Text>
-            </View>
-
-            <View
-              style={[
-                styles.infoItem,
-                { backgroundColor: colors.surface, borderColor: colors.border },
-              ]}
-            >
-              <Ionicons name="car-outline" size={20} color={colors.text} />
-              <Text style={[styles.infoItemText, { color: colors.text }]}>
-                Free delivery
-              </Text>
-            </View>
-
-            <View
-              style={[
-                styles.infoItem,
-                { backgroundColor: colors.surface, borderColor: colors.border },
-              ]}
-            >
-              <Ionicons name="location-outline" size={20} color={colors.text} />
-              <Text style={[styles.infoItemText, { color: colors.text }]}>
-                Available in nearest store
-              </Text>
-            </View>
           </View>
         </View>
       </ScrollView>
@@ -323,7 +289,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
           style={[
             styles.addToCartBtn,
             {
-              backgroundColor: colors.ctaGreen,
+              backgroundColor: colors.ctaPeach,
             },
           ]}
         >
@@ -341,7 +307,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ navigation, route }: any) => {
 
         <CartButton
           count={totalItems}
-          onPress={() => navigation.navigate("Shopping Cart")}
+          onPress={() => navigation.navigate("Cart")}
         />
       </View>
 

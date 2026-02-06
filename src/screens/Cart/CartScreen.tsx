@@ -12,6 +12,7 @@ import { useCart } from "../../context/CartContext";
 import { resolveImageSource } from "../../data/imageMap";
 import { formatCurrency } from "../../utils/formatters";
 import CartItem from "../../components/CartItem";
+import { globalStyles } from "../../styles/globalStyles";
 import { styles } from "./Cart.styles";
 
 const CartScreen: React.FC<Props> = ({ navigation }) => {
@@ -78,17 +79,18 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
         {items.length === 0 ? (
           <View
             style={[
+              globalStyles.emptyContainer,
               styles.emptyContainer,
               { backgroundColor: colors.background },
             ]}
           >
-            <View style={styles.emptyIconWrapper}>
+            <View style={[globalStyles.emptyIconWrapper, styles.emptyIconWrapper]}>
               <Text style={styles.emptyIcon}>🛒</Text>
             </View>
-            <Text style={[styles.emptyTitle, { color: colors.text }]}>
+            <Text style={[globalStyles.emptyTitle, styles.emptyTitle, { color: colors.text }]}>
               Your Cart is Empty
             </Text>
-            <Text style={[styles.emptySubtitle, { color: colors.mutedText }]}>
+            <Text style={[globalStyles.emptySubtitle, styles.emptySubtitle, { color: colors.mutedText }]}>
               Add items from our store to get started
             </Text>
           </View>
@@ -149,7 +151,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
       {items.length > 0 && (
         <View
           style={[
-            styles.bottomBar,
+            globalStyles.bottomBar,
             {
               backgroundColor: colors.card,
               borderTopColor: colors.border,
@@ -175,10 +177,11 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
 
           <Pressable
             style={[
+              globalStyles.checkoutBtn,
               styles.checkoutBtn,
               {
                 backgroundColor:
-                  selectedCount === 0 ? colors.mutedText : colors.ctaGreen,
+                  selectedCount === 0 ? colors.mutedText : colors.ctaPeach,
                 opacity: selectedCount === 0 ? 0.5 : 1,
               },
             ]}
@@ -187,7 +190,7 @@ const CartScreen: React.FC<Props> = ({ navigation }) => {
           >
             <Text
               style={[
-                styles.checkoutText,
+                globalStyles.checkoutText,
                 { color: isDarkMode ? colors.background : "#000000" },
               ]}
             >

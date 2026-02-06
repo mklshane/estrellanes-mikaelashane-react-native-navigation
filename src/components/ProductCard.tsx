@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Product } from "../types";
 import { useTheme } from "../context/ThemeContext";
 import { resolveImageSource } from "../data/imageMap";
@@ -45,7 +46,7 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
             <View
               style={[
                 styles.typeBadge,
-                { backgroundColor: isDarkMode ? colors.ctaGreen : "#0F172A" },
+                { backgroundColor: isDarkMode ? colors.ctaPeach : "#0F172A" },
               ]}
             >
               <Text style={[styles.typeBadgeText, { color: isDarkMode ? "#000" : "#FFF" }]}>
@@ -72,26 +73,17 @@ const ProductCard: React.FC<Props> = ({ product, onPress, onAddToCart }) => {
           </Text>
         </View>
 
-        {/* <Pressable
+        <Pressable
           onPress={() => setShowModal(true)}
           style={[
             styles.circleBtn,
             {
-              backgroundColor: colors.ctaGreen,
+              backgroundColor: colors.ctaPeach,
             },
           ]}
         >
-          <Text
-            style={[
-              styles.circleText,
-              {
-                color: colors.primaryText,
-              },
-            ]}
-          >
-            +
-          </Text>
-        </Pressable> */}
+          <Ionicons name="cart-outline" size={18} color={'#00000'} />
+        </Pressable>
       </View>
 
       <AddToCartModal
